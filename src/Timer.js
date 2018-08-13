@@ -11,16 +11,16 @@ import TimeService from './TimeService'
 // together.
 
 let intents = Intents();
-let timerConf = configureTimer(intents.observers,
-                               CounterService(intents.observables),
+let timerConf = configureTimer(intents.inputs,
+                               CounterService(intents.outputs),
                                TimeService(Rx.Scheduler.async));
 
-export function configureTimer(intentObservers, counterService, timeService) {
+export function configureTimer(inputs, counterService, timeService) {
     let overwrite = (state,x) => x;
 
     return {
         update (sources) {
-            sources.select('button').addListener('onClick').subscribe(intentObservers.countRequested);
+            sources.select('button').addListener('onClick').subscribe(inputs.countRequested);
 
             return [
                 combineLatest(
