@@ -30,19 +30,25 @@ export function configureTimer(inputs, counterService, bookService, timeService)
                     counterService.RunningCount,
                     timeService.SecondsElapsed,
                     bookService.Users,
-                    (c,s,users) => ({ counter : c, secondsElapsed : s, users:users})
+                    (c, s, us) => {
+                        //debugger;
+                        return ({ counter: c, secondsElapsed: s, users: us });
+                    }
                 ).reducer(overwrite)];
         },
 
         // produce a view given the current state
         view (props, state) {
+            const users = state.users.map((user) =>
+                <div key={user.id}>{user.name}</div>
+            );
             return (
             <div>
                 <div id="secs">Seconds Elapsed: {state.secondsElapsed}</div>
                 <div id="clicks">Times Clicked: {state.counter}</div>
                 <button id="countButton">Click Me</button>
                 <button id="getUsers">Get users</button>
-                <div>{state.users}</div>
+                { users }
             </div>
             )
         }
