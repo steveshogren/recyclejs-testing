@@ -1,7 +1,11 @@
-import Rx from 'rxjs'
+import Rx from 'rxjs';
+const { ajax } = rxjs.ajax; // = require("rxjs/ajax")
 
 export default function BookService(outputs) {
-    let runningCount = new Rx.BehaviorSubject(0)
-    outputs.countRequested.scan((x,_)=>x+1, 0).subscribe(runningCount)
-    return ({ RunningCount : runningCount.asObservable() });
+    let users = new Rx.BehaviorSubject(0);
+    outputs.usersRequested
+        .map(_ => ajax.('https://jsonplaceholder.typicode.com/users'))
+        .map(x=>x.response)
+        .subscribe(users);
+    return ({ Users : users.asObservable() });
 }
