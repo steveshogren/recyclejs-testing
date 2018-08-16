@@ -30,7 +30,7 @@ export function configureTimer(inputs, counterService, bookService, timeService)
                     counterService.RunningCount,
                     timeService.SecondsElapsed,
                     bookService.Users,
-                    (c,s) => ({ counter : c, secondsElapsed : s })
+                    (c,s,users) => ({ counter : c, secondsElapsed : s, users:users})
                 ).reducer(overwrite)];
         },
 
@@ -42,6 +42,7 @@ export function configureTimer(inputs, counterService, bookService, timeService)
                 <div id="clicks">Times Clicked: {state.counter}</div>
                 <button id="countButton">Click Me</button>
                 <button id="getUsers">Get users</button>
+                <div>{state.users}</div>
             </div>
             )
         }

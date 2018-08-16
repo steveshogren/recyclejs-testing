@@ -1,4 +1,4 @@
-import Rx from 'rxjs'
+import Rx from 'rxjs';
 
 export default function Intents(){
     let CountRequested = new Rx.Subject();
