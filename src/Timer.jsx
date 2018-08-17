@@ -1,11 +1,11 @@
-import React from 'react'
-import recycle from 'recycle'
+import React from 'react';
+import recycle from 'recycle';
 import { combineLatest } from 'rxjs/observable/combineLatest';
-import Rx from 'rxjs'
-import Intents from './Intents'
-import CounterService from './CounterService'
-import TimeService from './TimeService'
-import BookService from './BookService'
+import Rx from 'rxjs';
+import Intents from './Intents';
+import CounterService from './CounterService';
+import TimeService from './TimeService';
+import BookService from './BookService';
 
 // This is an integration point; configureTimer, CounterService, Intents, and
 // TimeService are all separately testable. This is the module that knits them

@@ -9,11 +9,11 @@ export default function BookService(outputs) {
     let users = new Rx.BehaviorSubject([]);
     outputs.usersRequested
         .flatMap(_ => Observable.ajax('https://jsonplaceholder.typicode.com/users'))
-        .map(x=> {
-            // debugger;
-            return x.response;})
-        .subscribe(users
-                  // {// debugger; users = x.response;}
-                   );
+        .map(x=> {return x.response;})
+    // can pass a cold or hot observable to subscribe
+    // and will pass along any new events into that observable
+    // this lets us create a refernce to it before any come
+    // down the pipe
+        .subscribe(users);
     return ({ Users : users.asObservable() });
 }
