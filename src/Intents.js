@@ -1,6 +1,6 @@
 import Rx from 'rxjs';
 
-export default function Intents(){
+function Intents(){
     let CountRequested = new Rx.Subject();
     let UsersRequested = new Rx.Subject();
     //clients usually want EITHER an observable or an observable, not both.
@@ -11,3 +11,7 @@ export default function Intents(){
                     usersRequested: UsersRequested.asObservable()}
     };
 };
+
+
+let intents = Intents();
+export default intents;
