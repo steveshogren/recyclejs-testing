@@ -12,7 +12,14 @@ const combine1 = function(outputs, fn) {
             return [
                 combineLatest(
                     outputs,
-                    fn
+                    function (...outputs) {
+                        const kvs = outputs.map((o, i) => [o, fn[i]]);
+                        const newState =  kvs.reduce((map, [o,k])=> {
+                            map[k] = o;
+                            return map;} , {});
+                        debugger;
+                        return newState;
+                    }
                 ).reducer(overwrite)];
 }
 
@@ -21,7 +28,7 @@ export function configureUser(bookService) {
     return {
         update (sources) {
             return combine1 ([bookService.Users],
-                              (us) => ({ Users: us }));
+                             ['Users']);
         },
 
         // produce a view given the current state
