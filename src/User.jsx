@@ -8,16 +8,15 @@ import BookService from './BookService';
 let timerConf = configureUser(BookService(intents.outputs));
 
 let overwrite = (state,x) => x;
-const combine1 = function(outputs, fn) {
+const combine1 = function(outputs) {
             return [
                 combineLatest(
-                    outputs,
-                    function (...outputs) {
-                        const kvs = outputs.map((o, i) => [o, fn[i]]);
+                    outputs.map(([svc, val])=>svc[val]),
+                    function (...results) {
+                        const kvs = results.map((o, i) => [o, outputs[i][1]]);
                         const newState =  kvs.reduce((map, [o,k])=> {
                             map[k] = o;
                             return map;} , {});
-                        debugger;
                         return newState;
                     }
                 ).reducer(overwrite)];
@@ -27,8 +26,7 @@ export function configureUser(bookService) {
 
     return {
         update (sources) {
-            return combine1 ([bookService.Users],
-                             ['Users']);
+            return combine1 ([[bookService, 'Users']]);
         },
 
         // produce a view given the current state
